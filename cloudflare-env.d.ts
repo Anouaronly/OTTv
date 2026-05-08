@@ -3,6 +3,5 @@
 
 interface CloudflareEnv {
   ASSETS: Fetcher;
-  WORKER_SELF_REFERENCE: Service;
   IMAGES: ImagesBinding;
 }
