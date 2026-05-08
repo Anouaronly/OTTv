@@ -1,5 +1,6 @@
 import puppeteer from "@cloudflare/puppeteer";
 import { getCloudflareContext } from "@opennextjs/cloudflare";
+import { requireApiKey } from "@/lib/api-auth";
 
 export const dynamic = "force-dynamic";
 
@@ -13,6 +14,10 @@ function bad(msg: string, status = 400) {
 }
 
 export async function GET(req: Request) {
+  const { env } = await getCloudflareContext({ async: true });
+  const unauthorized = requireApiKey(req, env.WORKER_API_KEY);
+  if (unauthorized) return unauthorized;
+
   const { searchParams } = new URL(req.url);
   const target = searchParams.get("url");
   const format = (searchParams.get("format") ?? "A4") as
@@ -29,7 +34,6 @@ export async function GET(req: Request) {
   if (parsed.protocol !== "https:") return bad("HTTPS only");
   if (PRIVATE_HOST_RX.test(parsed.hostname)) return bad("Private hosts blocked");
 
-  const { env } = await getCloudflareContext({ async: true });
   const browser = await puppeteer.launch(env.MYBROWSER);
 
   try {

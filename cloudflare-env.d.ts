@@ -5,4 +5,6 @@ interface CloudflareEnv {
   ASSETS: Fetcher;
   IMAGES: ImagesBinding;
   MYBROWSER: Fetcher;
+  // Set via: `npx wrangler secret put WORKER_API_KEY`
+  WORKER_API_KEY?: string;
 }
