@@ -4,4 +4,5 @@
 interface CloudflareEnv {
   ASSETS: Fetcher;
   IMAGES: ImagesBinding;
+  MYBROWSER: Fetcher;
 }

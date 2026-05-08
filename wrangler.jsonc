@@ -27,5 +27,11 @@
     // Cloudflare Images binding for next/image optimization
     // see https://opennext.js.org/cloudflare/howtos/image
     "binding": "IMAGES"
+  },
+  "browser": {
+    // Cloudflare Browser Rendering binding (paid feature).
+    // Used by /api/screenshot and /api/pdf for puppeteer-based rendering.
+    // see https://developers.cloudflare.com/browser-rendering/
+    "binding": "MYBROWSER"
   }
 }
