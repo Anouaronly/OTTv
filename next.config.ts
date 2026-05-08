@@ -4,6 +4,10 @@ import { initOpenNextCloudflareForDev } from "@opennextjs/cloudflare";
 initOpenNextCloudflareForDev();
 
 const nextConfig: NextConfig = {
+  // Required by @opennextjs/cloudflare when invoked with --skipNextBuild.
+  // Produces .next/standalone/ that OpenNext bundles into the worker.
+  output: "standalone",
+
   // Cut filesystem-derived leakage from production HTML/JS.
   poweredByHeader: false,
   reactStrictMode: true,
