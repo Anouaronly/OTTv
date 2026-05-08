@@ -4,6 +4,5 @@
 interface CloudflareEnv {
   ASSETS: Fetcher;
   WORKER_SELF_REFERENCE: Service;
-  NEXT_INC_CACHE_R2_BUCKET: R2Bucket;
   IMAGES: ImagesBinding;
 }
