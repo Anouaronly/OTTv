@@ -1,0 +1,403 @@
+@import "tailwindcss";
+@plugin "daisyui" {
+  themes: dark --default;
+}
+
+/* -------------------------------------------------------------------------
+   Tokens — Binance-style design system mapped to OTTv product copy.
+   Single accent (Binance Yellow) carries primary CTAs, brand-claim headlines
+   and emphasis spans. Trading green/red retained as semantic price tokens
+   (used here only on review stars + risk-free badge — no general "success"
+   reuse).
+   ----------------------------------------------------------------------- */
+
+:root {
+  /* Canvas (dark, marketing default) */
+  --canvas-dark: #0b0e11;
+  --surface-card-dark: #1e2329;
+  --surface-elevated-dark: #2b3139;
+
+  /* Canvas (light, transactional / footer) */
+  --canvas-light: #ffffff;
+  --surface-soft-light: #fafafa;
+  --surface-strong-light: #f5f5f5;
+
+  /* Hairlines */
+  --hairline-on-light: #eaecef;
+  --hairline-on-dark: #2b3139;
+  --border-strong: #cdd1d6;
+
+  /* Brand */
+  --primary: #fcd535;
+  --primary-active: #f0b90b;
+  --primary-disabled: #3a3a1f;
+
+  /* Text */
+  --ink: #181a20;
+  --on-primary: #181a20;
+  --on-dark: #ffffff;
+  --body-on-dark: #eaecef;
+  --body-on-light: #181a20;
+  --muted: #707a8a;
+  --muted-strong: #929aa5;
+
+  /* Semantic */
+  --trading-up: #0ecb81;
+  --trading-down: #f6465d;
+  --info: #3b82f6;
+
+  /* Back-compat: anything still referencing old vars renders close to scheme */
+  --background: var(--canvas-dark);
+  --foreground: var(--on-dark);
+  --card-bg: var(--surface-card-dark);
+}
+
+@theme inline {
+  --color-background: var(--canvas-dark);
+  --color-foreground: var(--on-dark);
+  --color-canvas-dark: var(--canvas-dark);
+  --color-surface-card: var(--surface-card-dark);
+  --color-surface-elevated: var(--surface-elevated-dark);
+  --color-canvas-light: var(--canvas-light);
+  --color-surface-soft-light: var(--surface-soft-light);
+  --color-hairline: var(--hairline-on-dark);
+  --color-hairline-light: var(--hairline-on-light);
+  --color-primary: var(--primary);
+  --color-primary-active: var(--primary-active);
+  --color-ink: var(--ink);
+  --color-body: var(--body-on-dark);
+  --color-muted: var(--muted);
+  --color-muted-strong: var(--muted-strong);
+  --color-trading-up: var(--trading-up);
+  --color-trading-down: var(--trading-down);
+  --font-sans: var(--font-inter), -apple-system, BlinkMacSystemFont, "Segoe UI",
+    Roboto, sans-serif;
+  --font-mono: var(--font-mono-stack), "JetBrains Mono", ui-monospace, Menlo,
+    monospace;
+}
+
+html,
+body {
+  background: var(--canvas-dark) !important;
+  color: var(--body-on-dark);
+  font-family: var(--font-inter), -apple-system, BlinkMacSystemFont, "Segoe UI",
+    Roboto, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  -webkit-tap-highlight-color: transparent;
+  overflow-x: clip;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+img {
+  max-width: 100%;
+}
+
+section[id] {
+  scroll-margin-top: 6rem;
+}
+
+/* Focus ring — input fields keep the semantic info token (a11y standard).
+   Buttons (.cta-*) override below with a brand-yellow shape-following ring. */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  outline: 2px solid var(--info);
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* -------------------------------------------------------------------------
+   Display weight — heavier than typical marketing systems. Trading platforms
+   need headlines and stat numbers that compete with dense data.
+   ----------------------------------------------------------------------- */
+h1,
+.display-xl,
+.display-lg {
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+h2,
+.display-md {
+  font-weight: 700;
+  letter-spacing: -0.015em;
+  line-height: 1.15;
+}
+h3,
+.title-lg {
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+/* -------------------------------------------------------------------------
+   Brand utilities (class names preserved for back-compat with components,
+   internals re-skinned to Binance system)
+   ----------------------------------------------------------------------- */
+
+/* Yellow emphasis text — replaces the old pink→orange gradient. Single-color
+   accent is the Binance signature; gradients are explicitly disallowed. */
+.brand-gradient-text {
+  color: var(--primary);
+  background: none;
+  -webkit-text-fill-color: var(--primary);
+}
+
+/* Tabular number voice — proportional but column-aligned, like BinancePlex.
+   Uses the body font (Inter) with tabular-nums + slashed zero feature, which
+   gives clean financial-style numbers without the wide-comma feel of strict
+   monospace. */
+.font-num {
+  font-variant-numeric: tabular-nums slashed-zero;
+  font-feature-settings: "tnum" 1, "zero" 1;
+  letter-spacing: -0.01em;
+}
+
+/* -------------------------------------------------------------------------
+   CTA system — polished to echo the OTTV logo's design language:
+   8px radius (matches the logo's rounded square), brand-yellow focus
+   glow (no generic blue ring), subtle 1px hover lift, 0.98 press scale,
+   and proper disabled treatment. Easing curve: smooth ease-out (Material).
+   ----------------------------------------------------------------------- */
+
+/* Suppress the global blue input focus ring on .cta-* buttons — they get
+   a brand-shaped glow below instead, which follows the button's actual radius. */
+button.cta-primary:focus-visible,
+a.cta-primary:focus-visible,
+button.cta-pill:focus-visible,
+a.cta-pill:focus-visible,
+button.cta-outline:focus-visible,
+a.cta-outline:focus-visible,
+button.cta-outline-light:focus-visible,
+a.cta-outline-light:focus-visible {
+  outline: none;
+}
+
+/* Primary CTA — the system's universal action: yellow with black text. */
+.cta-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background: var(--primary);
+  color: var(--on-primary) !important;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 1;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.04);
+  transition:
+    background 0.18s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.18s cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.cta-primary:hover {
+  background: var(--primary-active);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px -6px rgba(252, 213, 53, 0.45);
+}
+.cta-primary:active {
+  background: var(--primary-active);
+  transform: translateY(0) scale(0.985);
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.06);
+  transition-duration: 0.08s;
+}
+.cta-primary:focus-visible {
+  box-shadow: 0 0 0 3px var(--canvas-dark), 0 0 0 5px var(--primary);
+}
+.cta-primary:disabled,
+.cta-primary[aria-disabled="true"] {
+  background: var(--primary-disabled);
+  color: var(--muted) !important;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* Pill variant — reserved for top-of-page hero sign-up moments */
+.cta-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background: var(--primary);
+  color: var(--on-primary) !important;
+  padding: 14px 32px;
+  border-radius: 9999px;
+  font-weight: 600;
+  font-size: 15px;
+  line-height: 1;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.04);
+  transition:
+    background 0.18s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.18s cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.cta-pill:hover {
+  background: var(--primary-active);
+  transform: translateY(-1px);
+  box-shadow: 0 8px 20px -8px rgba(252, 213, 53, 0.5);
+}
+.cta-pill:active {
+  background: var(--primary-active);
+  transform: translateY(0) scale(0.985);
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.06);
+  transition-duration: 0.08s;
+}
+.cta-pill:focus-visible {
+  box-shadow: 0 0 0 3px var(--canvas-dark), 0 0 0 5px var(--primary);
+}
+
+/* Secondary on dark — surface-card with white text, hairline border */
+.cta-outline {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background: var(--surface-card-dark);
+  color: var(--on-dark);
+  border: 1px solid var(--hairline-on-dark);
+  padding: 10px 22px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 1;
+  cursor: pointer;
+  text-decoration: none;
+  transition:
+    background 0.18s cubic-bezier(0.16, 1, 0.3, 1),
+    border-color 0.18s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.18s cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.cta-outline:hover {
+  background: var(--surface-elevated-dark);
+  border-color: var(--primary);
+  transform: translateY(-1px);
+}
+.cta-outline:active {
+  transform: translateY(0) scale(0.985);
+  transition-duration: 0.08s;
+}
+.cta-outline:focus-visible {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px var(--canvas-dark), 0 0 0 5px var(--primary);
+}
+
+/* Secondary on light — for the light footer / transactional surfaces */
+.cta-outline-light {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background: var(--canvas-light);
+  color: var(--ink);
+  border: 1px solid var(--hairline-on-light);
+  padding: 10px 22px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 1;
+  cursor: pointer;
+  text-decoration: none;
+  transition:
+    background 0.18s cubic-bezier(0.16, 1, 0.3, 1),
+    border-color 0.18s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.cta-outline-light:hover {
+  background: var(--surface-strong-light);
+  border-color: var(--primary);
+  transform: translateY(-1px);
+}
+.cta-outline-light:active {
+  transform: translateY(0) scale(0.985);
+  transition-duration: 0.08s;
+}
+.cta-outline-light:focus-visible {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px var(--canvas-light), 0 0 0 5px var(--primary);
+}
+
+/* Inline yellow text (e.g. "A Wide Range") — no underline decoration.
+   Binance trusts color contrast alone, no swooshes / hand-drawn lines. */
+.highlight-underline {
+  color: var(--primary);
+  display: inline;
+}
+
+/* Review stars (mapped to trading-up green for system coherence) */
+.tp-stars {
+  color: var(--trading-up);
+  letter-spacing: 2px;
+}
+
+/* Section eyebrow — muted-strong on dark, uppercase tracked. Not yellow:
+   yellow is reserved for primary CTAs / brand-claim headlines, not labels. */
+.eyebrow {
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted-strong);
+}
+
+/* Card lift — subtler than before, no shadow inflation */
+.card-hover {
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+.card-hover:hover {
+  border-color: var(--surface-elevated-dark);
+}
+
+/* Featured pricing card — solid yellow ring instead of gradient aura */
+.featured-aura {
+  border: 1px solid var(--primary) !important;
+}
+
+/* Step connector hairline (replaces dashed gradient) */
+.step-dash {
+  background: var(--hairline-on-dark);
+  height: 1px;
+}
+
+/* Decorative blobs deprecated — Binance system disallows atmospheric backdrops.
+   Class kept (no-op) to avoid breaking any stray references. */
+.glow-blob {
+  display: none !important;
+}

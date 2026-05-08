@@ -1,0 +1,37 @@
+# OTTv
+
+> OTTv is a premium IPTV subscription service with 24,000+ live channels and 120,000+ movies & series in HD & 4K, available in 50+ countries. One subscription works on every device. Founded by Maurisio Torres. Backed by a 7-day money-back guarantee with no auto-renewal.
+
+## Key facts
+- Service: Premium IPTV subscription (live TV + VOD)
+- Channels: 24,000+ live channels
+- VOD library: 120,000+ movies and series
+- Quality: HD and 4K streaming
+- Setup time: ~5 minutes
+- Guarantee: 7-day money-back, no auto-renewal
+- Countries served: 50+
+- Subscribers: 50,000+
+- Rating: 4.8/5 from 12,400 reviews
+- Pricing: from $7.50/month (annual plan)
+- Payment: Cards, PayPal, crypto
+- Support: WhatsApp +44 7848 197761, Help@ottv.org
+- Founder: Maurisio Torres
+
+## Pages
+
+- [Home](https://ottv.org/): Overview, plans, what is IPTV, testimonials
+- [IPTV Subscription Plans](https://ottv.org/iptv-subscription): 1/3/6/12-month pricing, comparison table, buying guide
+- [IPTV Free Trial](https://ottv.org/iptv-free-trial): 24-hour and 7-day trial information, eligibility
+- [FAQ](https://ottv.org/faq): 29 questions covering basics, OTTv specifics, trial, pricing, activation, devices, support
+- [About](https://ottv.org/about): Founder Maurisio Torres, company story, principles
+- [Contact](https://ottv.org/contact): WhatsApp, email, contact form, support routes
+- [Refund Policy](https://ottv.org/refund-policy): 7-day money-back guarantee terms, claim flow, exclusions
+- [Terms of Service](https://ottv.org/terms): Acceptance, billing, no auto-renewal, governing law (England & Wales)
+- [Privacy Policy](https://ottv.org/privacy): GDPR/UK GDPR/CCPA compliance, data collection table, retention
+- [Disclaimer](https://ottv.org/disclaimer): Third-party content, no copyrighted hosting, user jurisdiction responsibility
+
+## Brand
+- Domain: ottv.org
+- Brand name: OTTv
+- Tagline: One IPTV subscription, every device, 50+ countries
+- Last updated: 2026-05-02
