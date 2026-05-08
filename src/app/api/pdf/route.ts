@@ -40,7 +40,7 @@ export async function GET(req: Request) {
     const page = await browser.newPage();
     await page.goto(target, { waitUntil: "networkidle0", timeout: 30000 });
     const pdf = await page.pdf({ format, printBackground: true });
-    return new Response(pdf as ArrayBuffer, {
+    return new Response(new Uint8Array(pdf), {
       headers: {
         "content-type": "application/pdf",
         "content-disposition": 'inline; filename="document.pdf"',

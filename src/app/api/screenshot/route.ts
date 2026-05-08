@@ -43,7 +43,7 @@ export async function GET(req: Request) {
     await page.setViewport({ width, height });
     await page.goto(target, { waitUntil: "networkidle0", timeout: 30000 });
     const img = await page.screenshot({ type: "png", fullPage });
-    return new Response(img as ArrayBuffer, {
+    return new Response(new Uint8Array(img), {
       headers: {
         "content-type": "image/png",
         "cache-control": "public, max-age=300",
